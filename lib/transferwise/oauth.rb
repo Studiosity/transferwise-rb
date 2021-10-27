@@ -11,7 +11,8 @@ module Transferwise
       @client ||= ::OAuth2::Client.new(
         @client_id,
         @client_secret,
-        { site: Transferwise.api_base,
+        {
+          site: Transferwise.api_base,
           auth_scheme: :basic_auth
         }
       )
@@ -21,7 +22,8 @@ module Transferwise
       @authorize_client ||= ::OAuth2::Client.new(
         @client_id,
         @client_secret,
-        { site: Transferwise.authorization_base,
+        {
+          site: Transferwise.authorization_base,
           auth_scheme: :basic_auth
         }
       )
