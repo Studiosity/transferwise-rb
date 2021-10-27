@@ -25,10 +25,7 @@ require 'transferwise/transfer'
 require 'transferwise/util'
 require 'transferwise/rate'
 require 'transferwise/request'
-require 'transferwise/borderless_account'
-require 'transferwise/borderless_account/balance_currency'
-require 'transferwise/borderless_account/statement'
-require 'transferwise/borderless_account/transaction'
+require 'transferwise/multi_currency_account'
 
 # Errors
 require 'transferwise/transferwise_error'
