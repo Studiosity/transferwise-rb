@@ -9,7 +9,7 @@ module Transferwise
     end
 
     def self.account_details(profile_id, headers)
-      url = "/v3/profiles/#{profile_id}/account-details"
+      url = "/v1/profiles/#{profile_id}/account-details"
 
       response = Request.request(:get, url, {}, headers)
       convert_to_transferwise_object(response)
