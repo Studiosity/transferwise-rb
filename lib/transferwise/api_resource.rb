@@ -5,17 +5,19 @@ module Transferwise
     API_VERSION = 'v1'.freeze
 
     def self.class_name
-      self.name.split('::')[-1]
+      name.split('::')[-1]
     end
 
     def self.resource_path(resource_id)
       "#{collection_path}/#{resource_id}"
     end
 
-    def self.collection_path(resource_id = nil)
+    def self.collection_path(_resource_id = nil)
       if self == APIResource
-        raise NotImplementedError, 'APIResource is an abstract class. You should perform actions on its subclasses (Account, Transfer, etc.)'
+        raise NotImplementedError,
+              'APIResource is an abstract class. You should perform actions on its subclasses (Account, Transfer, etc.)'
       end
+
       "/#{API_VERSION}/#{CGI.escape(class_name.downcase)}s"
     end
 

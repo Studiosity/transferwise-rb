@@ -1,11 +1,10 @@
 module Transferwise
   module TransferwiseObject
-
     def self.included(base)
       base.extend ClassMethods
     end
 
-    def initialize()
+    def initialize
       @values = {}
     end
 
@@ -16,7 +15,7 @@ module Transferwise
     end
 
     def add_methods(keys)
-      self.instance_eval do
+      instance_eval do
         keys.each do |k|
           self.class.send(:define_method, k.underscore) { @values[k] }
         end
@@ -35,12 +34,11 @@ module Transferwise
         when Array
           resp.map { |i| convert_to_transferwise_object(i) }
         when Hash
-          self.new.initialize_from(resp)
+          new.initialize_from(resp)
         else
           resp
         end
       end
     end
-
   end
 end

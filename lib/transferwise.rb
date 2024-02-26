@@ -5,10 +5,10 @@ require 'rest-client'
 require 'json'
 
 # Version
-require "transferwise/version"
+require 'transferwise/version'
 
 # Oauth2 Authentication
-require "transferwise/oauth"
+require 'transferwise/oauth'
 
 # ActiveSupport extensions
 require 'active_support/core_ext/hash/indifferent_access'
@@ -31,10 +31,8 @@ require 'transferwise/multi_currency_account'
 require 'transferwise/transferwise_error'
 
 module Transferwise
-
   class << self
-    attr_accessor :mode
-    attr_accessor :access_token
+    attr_accessor :mode, :access_token
 
     def api_base
       live_url = 'https://api.transferwise.com'

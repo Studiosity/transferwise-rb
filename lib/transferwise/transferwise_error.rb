@@ -1,9 +1,8 @@
 module Transferwise
-
   STATUS_CLASS_MAPPING = {
-    400 => "InvalidRequestError",
-    404 => "InvalidRequestError",
-    401 => "AuthenticationError"
+    400 => 'InvalidRequestError',
+    404 => 'InvalidRequestError',
+    401 => 'AuthenticationError'
   }
 
   class TransferwiseError < StandardError
@@ -16,7 +15,7 @@ module Transferwise
     end
 
     def to_s
-      status_string = @http_status.nil? ? "" : "(Status #{@http_status}) "
+      status_string = @http_status.nil? ? '' : "(Status #{@http_status}) "
       "#{status_string}#{@message}"
     end
   end
@@ -35,5 +34,4 @@ module Transferwise
 
   class ParseError < TransferwiseError
   end
-
 end

@@ -28,22 +28,22 @@ describe Transferwise::Request do
 
     context 'GET method' do
       it 'calls to API for requested URL' do
-        stub_authed_request(:get, '/v1/widgets', access_token).
-          to_return(body: '[{"id":1234,"name":"Spoon"}]')
+        stub_authed_request(:get, '/v1/widgets', access_token)
+          .to_return(body: '[{"id":1234,"name":"Spoon"}]')
 
         response = Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
         expect(response).to eq [{ 'id' => 1234, 'name' => 'Spoon' }]
       end
 
       it 'concatenates params on URL' do
-        stub_authed_request(:get, '/v1/widgets?filter=wood', access_token).
-          to_return(body: '[{"id":5432,"name":"Chair"}]')
+        stub_authed_request(:get, '/v1/widgets?filter=wood', access_token)
+          .to_return(body: '[{"id":5432,"name":"Chair"}]')
 
         response =
           Transferwise::Request.request(
             :get,
             '/v1/widgets',
-            { filter: 'wood'},
+            { filter: 'wood' },
             { access_token: access_token }
           )
         expect(response).to eq [{ 'id' => 5432, 'name' => 'Chair' }]
@@ -53,16 +53,16 @@ describe Transferwise::Request do
         before { allow(Transferwise).to receive(:access_token).and_return 'fallback-token' }
 
         it 'uses token provided in headers' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: '[{"id":2345,"name":"Bird"}]')
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: '[{"id":2345,"name":"Bird"}]')
 
           response = Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
           expect(response).to eq [{ 'id' => 2345, 'name' => 'Bird' }]
         end
 
         it 'falls back to globally configured option' do
-          stub_authed_request(:get, '/v1/widgets', 'fallback-token').
-            to_return(body: '[{"id":3456,"name":"Hat"}]')
+          stub_authed_request(:get, '/v1/widgets', 'fallback-token')
+            .to_return(body: '[{"id":3456,"name":"Hat"}]')
 
           response = Transferwise::Request.request :get, '/v1/widgets'
           expect(response).to eq [{ 'id' => 3456, 'name' => 'Hat' }]
@@ -71,8 +71,8 @@ describe Transferwise::Request do
 
       context 'response is invalid JSON' do
         it 'raises ParseError' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: 'invalid body')
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: 'invalid body')
 
           expect do
             Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
@@ -88,8 +88,8 @@ describe Transferwise::Request do
 
       context 'response is a 400 bad request' do
         it 'raises InvalidRequestError' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: '{"error":"That was bad, m\'kay"}', status: 400)
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: '{"error":"That was bad, m\'kay"}', status: 400)
 
           expect do
             Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
@@ -97,8 +97,8 @@ describe Transferwise::Request do
         end
 
         it 'handles multiple errors returned' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: '{"errors":[{"message":"Error 1"},{"message":"Error 2"}]}', status: 400)
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: '{"errors":[{"message":"Error 1"},{"message":"Error 2"}]}', status: 400)
 
           expect do
             Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
@@ -108,8 +108,8 @@ describe Transferwise::Request do
 
       context 'response is a 401 unauthorized' do
         it 'raises AuthenticationError' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: '{"error":"No access for you"}', status: 401)
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: '{"error":"No access for you"}', status: 401)
 
           expect do
             Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
@@ -119,8 +119,8 @@ describe Transferwise::Request do
 
       context 'response is a 404 not found' do
         it 'raises InvalidRequestError' do
-          stub_authed_request(:get, '/v1/widgets', access_token).
-            to_return(body: '{"error":"No comprendo"}', status: 404)
+          stub_authed_request(:get, '/v1/widgets', access_token)
+            .to_return(body: '{"error":"No comprendo"}', status: 404)
 
           expect do
             Transferwise::Request.request :get, '/v1/widgets', {}, { access_token: access_token }
@@ -131,18 +131,18 @@ describe Transferwise::Request do
 
     context 'POST method' do
       it 'calls to API for requested URL' do
-        stub_authed_request(:post, '/v1/widgets', access_token).
-          with(body: '{}').
-          to_return(body: '[{"id":8475,"name":"Spinner"}]')
+        stub_authed_request(:post, '/v1/widgets', access_token)
+          .with(body: '{}')
+          .to_return(body: '[{"id":8475,"name":"Spinner"}]')
 
         response = Transferwise::Request.request :post, '/v1/widgets', {}, { access_token: access_token }
         expect(response).to eq [{ 'id' => 8475, 'name' => 'Spinner' }]
       end
 
       it 'passes through parameters in the POST body' do
-        stub_authed_request(:post, '/v1/widgets', access_token).
-          with(body: '{"size":"large"}').
-          to_return(body: '[{"id":2938,"name":"Pen"}]')
+        stub_authed_request(:post, '/v1/widgets', access_token)
+          .with(body: '{"size":"large"}')
+          .to_return(body: '[{"id":2938,"name":"Pen"}]')
 
         response =
           Transferwise::Request.request(

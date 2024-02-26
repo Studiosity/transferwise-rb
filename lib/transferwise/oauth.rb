@@ -3,7 +3,8 @@ module Transferwise
     attr_accessor :access_token
 
     def initialize(client_id, client_secret)
-      @client_id, @client_secret = client_id, client_secret
+      @client_id = client_id
+      @client_secret = client_secret
     end
 
     # Get the OAuth 2 client
@@ -17,7 +18,7 @@ module Transferwise
         }
       )
     end
-    
+
     def authorize_client
       @authorize_client ||= ::OAuth2::Client.new(
         @client_id,
@@ -32,7 +33,7 @@ module Transferwise
     # Get the url to redirect a user to, pass the redirect_url you want the user
     # to be redirected back to.
     def authorize_url(redirect_url)
-      authorize_client.auth_code.authorize_url({redirect_uri: redirect_url})
+      authorize_client.auth_code.authorize_url(redirect_uri: redirect_url)
     end
 
     # Get the access token. You must pass the exact same redirect_url passed
